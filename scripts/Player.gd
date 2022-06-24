@@ -10,11 +10,16 @@ const MIN_LOOK_ANGLE : float = -90.0
 
 # vectors
 var mouseDelta : Vector2 = Vector2.ZERO
+var velocity : Vector3 = Vector3.ZERO
 
 # player componants
 onready var camera = get_node("Camera")
 
 #--------------- FUNCTIONS ----------------
+# gets called when the player is loaded
+func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 # gets called every time an input is made
 func _input(event):
 	# check if mouse moved

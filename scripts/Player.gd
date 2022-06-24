@@ -20,5 +20,9 @@ func _input(event):
 		# rotate on X
 		rotate_y(deg2rad(-1 * event.relative.x * MOUSE_SENSITIVITY))
 
+		
 		#rotate on Y
 		look_pivot.rotate_x(deg2rad(event.relative.y) * MOUSE_SENSITIVITY)
+
+		# clamp the X rotation
+		look_pivot.rotation.x = clamp(look_pivot.rotation.x, deg2rad(-90), deg2rad(90))

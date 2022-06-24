@@ -10,16 +10,18 @@ radius = 0.4
 
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 1 )
-MOUSE_SENSITIVITY = null
 
 [node name="Collider" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.9, 0 )
 shape = SubResource( 2 )
 
-[node name="Camera" type="Camera" parent="Collider"]
-transform = Transform( -1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, -2.18557e-08, -0.5 )
-
 [node name="Player Model" type="MeshInstance" parent="Collider"]
 mesh = SubResource( 1 )
 skeleton = NodePath("../..")
 material/0 = null
+
+[node name="look pivot" type="Spatial" parent="Collider"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.54423e-08, -0.35328 )
+
+[node name="Camera" type="Camera" parent="Collider/look pivot"]
+transform = Transform( -1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, -2.18557e-08, -0.5 )

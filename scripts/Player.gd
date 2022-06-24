@@ -3,9 +3,18 @@ extends KinematicBody
 class_name player
 
 #--------------- VARIABLES ----------------
+#------ EDITABLES
 export var WALK_SPEED: float = 3.0
+
+export var GRAVITY_ACCELERATION: float  = 9.8
+
 export var MOUSE_SENSITIVITY: float  = 0.2
 
+#------ VALUES
+var input_move: Vector3 = Vector3()
+var gravity_local: Vector3 = Vector3()
+
+#------ REFERENCES
 onready var look_pivot: Spatial = $"look pivot"
 onready var player_model: MeshInstance = $"Collider/Player Model"
 #--------------- FUNCTIONS ----------------
@@ -43,4 +52,5 @@ func get_input_direction() -> Vector3:
 		Input.get_action_strength("left") - Input.get_action_strength("right") # grab the X movement
 	)
 
-	return Vector3(x, 0, z).normalized()
+	# gather info and convert it from player space to world space and normalise it
+	return transform.basis.xform(Vector3(x, 0, z)).normalized()

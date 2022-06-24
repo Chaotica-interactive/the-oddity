@@ -3,39 +3,19 @@ extends KinematicBody
 class_name player
 
 #--------------- VARIABLES ----------------
-# cam controls
-export var MOUSE_SENSITIVITY : float = 1.0
-const MAX_LOOK_ANGLE : float = 90.0
-const MIN_LOOK_ANGLE : float = -90.0
+export var MOUSE_SENSITIVITY: float  = 0.2
 
-# vectors
-var mouseDelta : Vector2 = Vector2.ZERO
-var velocity : Vector3 = Vector3.ZERO
-
-# player componants
-onready var camera = get_node("Camera")
-
+onready var look_pivot: Spatial = $"look pivot"
 #--------------- FUNCTIONS ----------------
 # gets called when the player is loaded
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-# gets called every time an input is made
+# gets called every time an input is processed
 func _input(event):
-	# check if mouse moved
 	if event is InputEventMouseMotion:
-		mouseDelta = event.relative
+		# rotate on X
+		rotate_y(deg2rad(-1 * event.relative.x * MOUSE_SENSITIVITY))
 
-# gets called every frame
-func _process(delta):
-	# rotate camera along X axis
-	camera.rotation_degrees -= Vector3(rad2deg(mouseDelta.y),0,0) * MOUSE_SENSITIVITY * delta
-
-	# now clamp the X rotation so the player cant do crazy ass acrobatics while standing still
-	camera.rotation_degrees.x = clamp(camera.rotation_degrees.x, MIN_LOOK_ANGLE, MAX_LOOK_ANGLE)
-
-	# rotate the player themself along the Y axis
-	rotation_degrees -= Vector3(0,rad2deg(mouseDelta.x),0) * MOUSE_SENSITIVITY * delta
-
-	# reset mouse delta vector
-	mouseDelta = Vector2.ZERO
+		#rotate on Y
+		look_pivot.rotate_x(deg2rad(event.relative.y) * MOUSE_SENSITIVITY)

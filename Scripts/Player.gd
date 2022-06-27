@@ -34,7 +34,7 @@ var gravity_local: Vector3 = Vector3()
 var snap_vector: Vector3 = Vector3()
 
 #------ REFERENCES
-onready var look_pivot: Spatial = $"Smoothing/look pivot"
+onready var look_pivot: Spatial = $"look pivot"
 onready var player_model: MeshInstance = $"Collider/Player Model"
 #--------------- FUNCTIONS ----------------
 #------ BUILT IN

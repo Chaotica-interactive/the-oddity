@@ -31,7 +31,7 @@ func _input(event):
 	# do stuff if the mouse is being moved
 	if event is InputEventMouseMotion:
 		# rotate on X
-		rotate_y(deg2rad(-1 * event.relative.x * MOUSE_SENSITIVITY))
+		rotate_y(deg2rad(-1 * event.relative.x) * MOUSE_SENSITIVITY)
 		
 		#rotate on Y
 		look_pivot.rotate_x(deg2rad(event.relative.y) * MOUSE_SENSITIVITY)

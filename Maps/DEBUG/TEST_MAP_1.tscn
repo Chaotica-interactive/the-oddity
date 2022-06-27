@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/Materials/Galvanised_steel/galvanised_steel.tres" type="Material" id=1]
+[ext_resource path="res://Assets/Materials/Dented_metal/dented_metal.tres" type="Material" id=2]
 
 [sub_resource type="PlaneMesh" id=1]
 
@@ -54,9 +55,9 @@ light_energy = 16.0
 shadow_enabled = true
 
 [node name="slope" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1.11101, 1.24482, 0, -1.24482, 1.11101, 0, -0.171739, -5.17156 )
+transform = Transform( 1, 0, 0, 0, 1.11101, 1.24482, 0, -1.24482, 1.11101, 0, -0.17174, -5.17156 )
 mesh = SubResource( 3 )
-material/0 = ExtResource( 1 )
+material/0 = ExtResource( 2 )
 
 [node name="StaticBody" type="StaticBody" parent="slope"]
 

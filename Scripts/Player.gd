@@ -34,9 +34,11 @@ var gravity_local: Vector3 = Vector3()
 var snap_vector: Vector3 = Vector3()
 
 #------ REFERENCES
-onready var look_pivot: Spatial = $"look pivot"
+onready var look_pivot: Spatial = $"Smoothing/look pivot"
 onready var player_model: MeshInstance = $"Collider/Player Model"
 #--------------- FUNCTIONS ----------------
+#------ BUILT IN
+
 # gets called when the player is loaded
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) #make it so the curor turns invisible and gets captured in the window (press F8 to stop the game without the mouse)
@@ -78,6 +80,8 @@ func _physics_process(delta):
 	
 	var _move = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP)# finally, move the player
 
+#------ SELF WRITTEN
+
 # grabs the current input direction
 func get_input_direction() -> Vector3:
 	var z: float = (
@@ -86,6 +90,6 @@ func get_input_direction() -> Vector3:
 	var x:float = (
 		Input.get_action_strength("left") - Input.get_action_strength("right") # grab the X movement
 	)
-	
+
 	# gather info and convert it from player space to world space and normalise it
 	return transform.basis.xform(Vector3(x, 0, z)).normalized()

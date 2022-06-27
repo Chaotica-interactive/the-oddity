@@ -75,7 +75,7 @@ func _physics_process(delta):
 	if Input.is_action_pressed("jump") and is_on_floor():
 		snap_vector = Vector3.ZERO# dissable slope snapping
 		gravity_local = Vector3.UP * JUMP_FORCE# apply the jump force
-
+	
 	var _move = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP)# finally, move the player
 
 # grabs the current input direction
@@ -86,6 +86,6 @@ func get_input_direction() -> Vector3:
 	var x:float = (
 		Input.get_action_strength("left") - Input.get_action_strength("right") # grab the X movement
 	)
-
+	
 	# gather info and convert it from player space to world space and normalise it
 	return transform.basis.xform(Vector3(x, 0, z)).normalized()

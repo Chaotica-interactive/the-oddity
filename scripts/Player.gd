@@ -4,7 +4,9 @@ class_name player
 
 #--------------- VARIABLES ----------------
 #------ EDITABLES
-export var WALK_SPEED: float = 3.0
+export var WALK_SPEED: float = 6.0
+
+export var JUMP_FORCE: float = 3.0
 
 export var GRAVITY_ACCELERATION: float  = 9.8
 
@@ -39,9 +41,16 @@ func _input(event):
 
 # gets called every physics frame
 func _physics_process(delta):
-	var direction: Vector3 =  get_input_direction()
+	input_move = get_input_direction() * WALK_SPEED
 
-	move_and_slide(direction * WALK_SPEED, Vector3.UP)
+	#make gravity work if the player is not on the floor
+	if not is_on_floor():
+		gravity_local += GRAVITY_ACCELERATION * Vector3.DOWN * delta
+	
+	if Input.is_action_pressed("jump") and is_on_floor():
+		gravity_local = Vector3.UP * JUMP_FORCE
+
+	var _move = move_and_slide(input_move + gravity_local, Vector3.UP)
 
 # grabs the current input direction
 func get_input_direction() -> Vector3:

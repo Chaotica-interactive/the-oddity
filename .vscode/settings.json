@@ -1,3 +1,16 @@
 {
-	"license.year": "2022"
+	"license.year": "2022",
+
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"**/Thumbs.db": true,
+		// project specific
+		"**/.import": true,
+		"**/*.import": true,
+		"**/*.blend1": true
+	}
 }

@@ -24,6 +24,10 @@ config/name="The Oddity"
 run/main_scene="res://Master.tscn"
 config/icon="res://icon.png"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/smoothing/plugin.cfg" )
+
 [input]
 
 forward={

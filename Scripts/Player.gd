@@ -15,6 +15,7 @@ export var MOUSE_SENSITIVITY: float  = 0.2
 #------ VALUES
 var input_move: Vector3 = Vector3()
 var gravity_local: Vector3 = Vector3()
+var snap_vector: Vector3 = Vector3()
 
 #------ REFERENCES
 onready var look_pivot: Spatial = $"look pivot"
@@ -43,17 +44,23 @@ func _input(event):
 func _physics_process(delta):
 	input_move = get_input_direction() * WALK_SPEED
 
-	#make gravity work if the player is not on the floor
+	# make gravity work if the player is not on the floor, else do nothing
 	if not is_on_floor():
 		gravity_local += GRAVITY_ACCELERATION * Vector3.DOWN * delta
 	else:
-		# stick to the floor  and prevent sliding
-		gravity_local = GRAVITY_ACCELERATION *-get_floor_normal() * delta
+		gravity_local = Vector3.ZERO
 	
+	# handle snap values
+	snap_vector = Vector3.DOWN
+	if is_on_floor():
+		snap_vector = -get_floor_normal()# if we are in the air, point towards the closest floor
+	
+	# handle jumping
 	if Input.is_action_pressed("jump") and is_on_floor():
-		gravity_local = Vector3.UP * JUMP_FORCE
+		snap_vector = Vector3.ZERO# dissable slope snapping
+		gravity_local = Vector3.UP * JUMP_FORCE# apply the jump force
 
-	var _move = move_and_slide(input_move + gravity_local, Vector3.UP)
+	var _move = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP)# finally, move the player
 
 # grabs the current input direction
 func get_input_direction() -> Vector3:

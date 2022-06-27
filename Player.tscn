@@ -21,7 +21,7 @@ skeleton = NodePath("../..")
 material/0 = null
 
 [node name="look pivot" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25328, -1.77636e-15 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.40151, -1.77636e-15 )
 
 [node name="Camera" type="Camera" parent="look pivot"]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.5, 0 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.306777, 0 )

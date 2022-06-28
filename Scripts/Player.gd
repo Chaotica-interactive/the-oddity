@@ -47,11 +47,13 @@ func _ready():
 
 # gets called every physics frame
 func _physics_process(delta):
+	#--- WASD MOVEMENT
 	# the player is running if the spring button is pressed, otherwise, they arent
 	is_running = true if Input.is_action_pressed("sprint") else false
 	# if the player is not running then use normal walk speed, otherwise set it to running
 	input_move = get_input_direction() * WALK_SPEED if not is_running else get_input_direction() * RUN_SPEED
 
+	#--- GRAVITY
 	# make gravity work if the player is not on the floor, else do nothing
 	if not is_on_floor():
 		gravity_local += GRAVITY_ACCELERATION * Vector3.DOWN * delta
@@ -63,12 +65,13 @@ func _physics_process(delta):
 	if is_on_floor():
 		snap_vector = -get_floor_normal()# if we are in the air, point towards the closest floor
 	
-	# handle jumping
+	#--- JUMPING
 	if Input.is_action_pressed("jump") and is_on_floor():
 		snap_vector = Vector3.ZERO# dissable slope snapping
 		gravity_local = Vector3.UP * JUMP_FORCE# apply the jump force
 	
-	var _move: Vector3 = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP)# finally, move the player
+	#--- MOVE PLAYER
+	var _move: Vector3 = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP)
 
 #------ SELF WRITTEN
 

@@ -21,18 +21,18 @@ class_name player
 #--------------- VARIABLES ----------------
 #------ EDITABLES
 export var WALK_SPEED: float = 6.0
+export var RUN_SPEED: float = 8.5
 
 export var JUMP_FORCE: float = 5.0
 
 export var GRAVITY_ACCELERATION: float  = 12.8
-
-export var MOUSE_SENSITIVITY: float  = 0.2
 
 #------ VALUES
 var input_move: Vector3 = Vector3()
 var gravity_local: Vector3 = Vector3()
 var snap_vector: Vector3 = Vector3()
 
+var is_running: bool = false
 #------ REFERENCES
 onready var player_model: MeshInstance = $"Collider/Player Model"
 #--------------- FUNCTIONS ----------------
@@ -47,7 +47,10 @@ func _ready():
 
 # gets called every physics frame
 func _physics_process(delta):
-	input_move = get_input_direction() * WALK_SPEED
+	# the player is running if the spring button is pressed, otherwise, they arent
+	is_running = true if Input.is_action_pressed("sprint") else false
+	# if the player is not running then use normal walk speed, otherwise set it to running
+	input_move = get_input_direction() * WALK_SPEED if not is_running else get_input_direction() * RUN_SPEED
 
 	# make gravity work if the player is not on the floor, else do nothing
 	if not is_on_floor():
@@ -65,7 +68,7 @@ func _physics_process(delta):
 		snap_vector = Vector3.ZERO# dissable slope snapping
 		gravity_local = Vector3.UP * JUMP_FORCE# apply the jump force
 	
-	var _move = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP)# finally, move the player
+	var _move: Vector3 = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP)# finally, move the player
 
 #------ SELF WRITTEN
 

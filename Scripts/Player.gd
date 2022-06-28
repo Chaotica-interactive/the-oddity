@@ -22,9 +22,9 @@ class_name player
 #------ EDITABLES
 export var WALK_SPEED: float = 6.0
 
-export var JUMP_FORCE: float = 4.5
+export var JUMP_FORCE: float = 5.0
 
-export var GRAVITY_ACCELERATION: float  = 9.8
+export var GRAVITY_ACCELERATION: float  = 12.8
 
 export var MOUSE_SENSITIVITY: float  = 0.2
 

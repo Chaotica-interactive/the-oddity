@@ -75,7 +75,7 @@ func _physics_process(delta):
 		snap_vector = -get_floor_normal()# if we are in the air, point towards the closest floor
 	
 	#--- JUMPING
-	if Input.is_action_pressed("jump") and is_on_floor() and not is_crouching:
+	if Input.is_action_just_pressed("jump") and is_on_floor() and not cieling_detector.is_colliding():
 		snap_vector = Vector3.ZERO# dissable slope snapping
 		gravity_local = Vector3.UP * JUMP_FORCE# apply the jump force
 	

@@ -20,8 +20,9 @@ class_name player
 
 #--------------- VARIABLES ----------------
 #------ EDITABLES
-export var WALK_SPEED: float = 6.0
-export var RUN_SPEED: float = 8.5
+export var WALK_SPEED: float = 4.0
+export var RUN_SPEED: float = 6.0
+export var CROUCH_SPEED: float = 1.5
 
 export var JUMP_FORCE: float = 5.0
 
@@ -32,9 +33,13 @@ var input_move: Vector3 = Vector3()
 var gravity_local: Vector3 = Vector3()
 var snap_vector: Vector3 = Vector3()
 
-var is_running: bool = false
+export var is_running: bool = false
+export var is_crouching: bool = false
 #------ REFERENCES
 onready var player_model: MeshInstance = $"Collider/Player Model"
+
+onready var collider: CollisionShape = $"Collider"
+onready var crouch_collider: CollisionShape = $"crouch collide"
 #--------------- FUNCTIONS ----------------
 #------ BUILT IN
 
@@ -50,8 +55,10 @@ func _physics_process(delta):
 	#--- WASD MOVEMENT
 	# the player is running if the spring button is pressed, otherwise, they arent
 	is_running = true if Input.is_action_pressed("sprint") else false
-	# if the player is not running then use normal walk speed, otherwise set it to running
-	input_move = get_input_direction() * WALK_SPEED if not is_running else get_input_direction() * RUN_SPEED
+	# if the player is not running then use normal walk speed, otherwise set it to running if player is not crouching, if they are, set it to crouching speed
+	input_move = (
+		get_input_direction() * WALK_SPEED if not is_running and not is_crouching else get_input_direction() * RUN_SPEED if not is_crouching else get_input_direction() * CROUCH_SPEED
+	)
 
 	#--- GRAVITY
 	# make gravity work if the player is not on the floor, else do nothing
@@ -70,6 +77,11 @@ func _physics_process(delta):
 		snap_vector = Vector3.ZERO# dissable slope snapping
 		gravity_local = Vector3.UP * JUMP_FORCE# apply the jump force
 	
+	#--- CROUCHING
+	is_crouching = Input.is_action_pressed("crouch")
+	collider.disabled = Input.is_action_pressed("crouch")
+	crouch_collider.disabled = not Input.is_action_pressed("crouch")
+
 	#--- MOVE PLAYER
 	var _move: Vector3 = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP)
 

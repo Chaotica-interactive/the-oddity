@@ -40,7 +40,7 @@ func _input(event):
 		rotation.x = clamp(rotation.x, deg2rad(-90), deg2rad(90))
 
 func _process(_delta):
-	if Input.is_action_pressed("crouch"):
+	if player.is_crouching:
 		transform.origin = Vector3(0.0, 0.4, 0.0)
 	else:
 		transform.origin = Vector3(0.0, 1.4, 0.0)

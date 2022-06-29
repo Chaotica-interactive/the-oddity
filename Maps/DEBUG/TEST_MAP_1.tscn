@@ -77,3 +77,13 @@ material/0 = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="MeshInstance/StaticBody"]
 shape = SubResource( 6 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 0.860578, 0, 0, 0, 0.1964, 0, 0, 0, 1, 2, 2.0872, 3.36879 )
+mesh = SubResource( 5 )
+material/0 = ExtResource( 2 )
+
+[node name="StaticBody" type="StaticBody" parent="MeshInstance2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance2/StaticBody"]
+shape = SubResource( 6 )

@@ -40,6 +40,8 @@ onready var player_model: MeshInstance = $"Collider/Player Model"
 
 onready var collider: CollisionShape = $"Collider"
 onready var crouch_collider: CollisionShape = $"crouch collide"
+
+onready var cieling_detector: RayCast = $"crouch collide/cieling detector"
 #--------------- FUNCTIONS ----------------
 #------ BUILT IN
 
@@ -73,14 +75,22 @@ func _physics_process(delta):
 		snap_vector = -get_floor_normal()# if we are in the air, point towards the closest floor
 	
 	#--- JUMPING
-	if Input.is_action_pressed("jump") and is_on_floor():
+	if Input.is_action_pressed("jump") and is_on_floor() and not is_crouching:
 		snap_vector = Vector3.ZERO# dissable slope snapping
 		gravity_local = Vector3.UP * JUMP_FORCE# apply the jump force
 	
 	#--- CROUCHING
-	is_crouching = Input.is_action_pressed("crouch")
-	collider.disabled = Input.is_action_pressed("crouch")
-	crouch_collider.disabled = not Input.is_action_pressed("crouch")
+	cieling_detector.force_raycast_update()
+
+	if Input.is_action_pressed("crouch"):
+		is_crouching = true
+	elif cieling_detector.is_colliding():
+		is_crouching = true
+	else:
+		is_crouching = false
+
+	collider.disabled = is_crouching
+	crouch_collider.disabled = not is_crouching
 
 	#--- MOVE PLAYER
 	var _move: Vector3 = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP)

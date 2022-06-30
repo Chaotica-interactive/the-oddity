@@ -28,6 +28,8 @@ export var JUMP_FORCE: float = 5.0
 
 export var GRAVITY_ACCELERATION: float  = 12.8
 
+export var MAX_SLOPE_ANGLE: float = 89.0
+
 #------ VALUES
 var input_move: Vector3 = Vector3()
 var gravity_local: Vector3 = Vector3()
@@ -93,7 +95,7 @@ func _physics_process(delta):
 	crouch_collider.disabled = not is_crouching
 
 	#--- MOVE PLAYER
-	var _move: Vector3 = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP)
+	input_move = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP, true, 4, MAX_SLOPE_ANGLE, true)
 
 #------ SELF WRITTEN
 

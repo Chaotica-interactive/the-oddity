@@ -28,7 +28,7 @@ export var JUMP_FORCE: float = 5.0
 
 export var GRAVITY_ACCELERATION: float  = 12.8
 
-export var MAX_SLOPE_ANGLE: float = 89.0
+export var MAX_SLOPE_ANGLE: float = 45.0
 
 #------ VALUES
 var input_move: Vector3 = Vector3()
@@ -37,6 +37,8 @@ var snap_vector: Vector3 = Vector3()
 
 export var is_running: bool = false
 export var is_crouching: bool = false
+
+export (int, 0, 200) var push = 1
 #------ REFERENCES
 onready var player_model: MeshInstance = $"Collider/Player Model"
 
@@ -95,7 +97,13 @@ func _physics_process(delta):
 	crouch_collider.disabled = not is_crouching
 
 	#--- MOVE PLAYER
-	input_move = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP, true, 4, MAX_SLOPE_ANGLE, true)
+	input_move = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP, true, 4, deg2rad(MAX_SLOPE_ANGLE), false)
+
+	#--- shove objects around when you collide with them
+	for index in get_slide_count():
+		var collision = get_slide_collision(index)
+		if collision.collider.is_in_group("bodies"):
+			collision.collider.apply_central_impulse(-collision.normal * push)
 
 #------ SELF WRITTEN
 

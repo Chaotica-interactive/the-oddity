@@ -12,3 +12,4 @@ data_*/
 
 # project specific
 /build
+/Assets/Music/**.wav

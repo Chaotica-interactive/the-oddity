@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Assets/Materials/Galvanised_steel/galvanised_steel.tres" type="Material" id=1]
 [ext_resource path="res://Assets/Materials/Dented_metal/dented_metal.tres" type="Material" id=2]
+[ext_resource path="res://Assets/Materials/Shaders/glass.tres" type="Material" id=3]
 
 [sub_resource type="PlaneMesh" id=1]
 
@@ -212,4 +213,4 @@ shape = SubResource( 8 )
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody/CollisionShape"]
 mesh = SubResource( 7 )
 skeleton = NodePath("../../..")
-material/0 = null
+material/0 = ExtResource( 3 )

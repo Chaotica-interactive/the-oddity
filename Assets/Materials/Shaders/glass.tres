@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+
+uniform float distortion_size = 0.4;
+uniform sampler2D glass;
+
+void fragment() {
+	vec2 d = texture(glass, UV).xy - vec2(0.5);
+	ALBEDO = texture(SCREEN_TEXTURE, SCREEN_UV + d * distortion_size).rgb;
+}"
+
+[sub_resource type="OpenSimplexNoise" id=2]
+
+[sub_resource type="NoiseTexture" id=3]
+noise = SubResource( 2 )
+
+[resource]
+shader = SubResource( 1 )
+shader_param/distortion_size = 0.4
+shader_param/glass = SubResource( 3 )

@@ -214,3 +214,27 @@ shape = SubResource( 8 )
 mesh = SubResource( 7 )
 skeleton = NodePath("../../..")
 material/0 = ExtResource( 3 )
+
+[node name="RigidBody2" type="RigidBody" parent="." groups=["bodies"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.82528, 14.5984, -2.51708 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody2" groups=["bodies"]]
+transform = Transform( 0.507447, 0, 0, 0, 0.507447, 0, 0, 0, 0.507447, -0.217487, 0.311147, 0 )
+shape = SubResource( 8 )
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody2/CollisionShape"]
+mesh = SubResource( 7 )
+skeleton = NodePath("../../..")
+material/0 = ExtResource( 3 )
+
+[node name="RigidBody3" type="RigidBody" parent="." groups=["bodies"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.16492, 15.8318, -2.51708 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody3" groups=["bodies"]]
+transform = Transform( 0.507447, 0, 0, 0, 0.507447, 0, 0, 0, 0.507447, -0.217487, 0.311147, 0 )
+shape = SubResource( 8 )
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody3/CollisionShape"]
+mesh = SubResource( 7 )
+skeleton = NodePath("../../..")
+material/0 = ExtResource( 3 )

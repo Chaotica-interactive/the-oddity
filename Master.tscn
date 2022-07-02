@@ -25,6 +25,7 @@ script = ExtResource( 4 )
 
 [node name="Camera" type="Camera" parent="Smoothing/look pivot"]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.306777, 0 )
+current = true
 
 [node name="control" type="Control" parent="."]
 anchor_right = 1.0

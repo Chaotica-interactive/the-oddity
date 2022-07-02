@@ -14,6 +14,7 @@ void fragment() {
 [sub_resource type="OpenSimplexNoise" id=2]
 
 [sub_resource type="NoiseTexture" id=3]
+as_normalmap = true
 noise = SubResource( 2 )
 
 [resource]

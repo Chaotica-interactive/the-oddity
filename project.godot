@@ -27,7 +27,6 @@ config/icon="res://icon.png"
 [debug]
 
 settings/crash_handler/message="Oh Crap! the game crashed! Please include any and all information when submitting an issue to https://github.com/Chaotica-interactive/the-oddity/issues"
-settings/stdout/print_fps=true
 gdscript/warnings/unsafe_property_access=true
 gdscript/warnings/unsafe_method_access=true
 gdscript/warnings/unsafe_cast=true

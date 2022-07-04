@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 #	The Oddity, a space adventure/ exploration game
 # 	Copyright (C) 2022 Chaotica Interactive
@@ -18,10 +18,10 @@ extends Spatial
 
 #--------------- VARIABLES ----------------
 #------ EDITABLES
-export var MOUSE_SENSITIVITY: float  = 0.2
+@export var MOUSE_SENSITIVITY: float  = 0.2
 
 #------ REFERENCES
-onready var player: KinematicBody = get_node("../../Player")
+@onready var player: CharacterBody3D = get_node("../../Player")
 
 #--------------- FUNCTIONS ----------------
 #------ BUILT IN

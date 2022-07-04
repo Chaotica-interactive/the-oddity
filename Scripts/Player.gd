@@ -1,4 +1,4 @@
-extends KinematicBody
+extends CharacterBody3D
 
 #	The Oddity, a space adventure/ exploration game
 # 	Copyright (C) 2022 Chaotica Interactive
@@ -20,40 +20,39 @@ class_name player
 
 #--------------- VARIABLES ----------------
 #------ EDITABLES
-export var WALK_SPEED: float = 4.0
-export var RUN_SPEED: float = 6.0
-export var CROUCH_SPEED: float = 1.5
+@export var WALK_SPEED: float = 4.0
+@export var RUN_SPEED: float = 6.0
+@export var CROUCH_SPEED: float = 1.5
 
-export var JUMP_FORCE: float = 5.0
+@export var JUMP_FORCE: float = 5.0
 
-export var GRAVITY_ACCELERATION: float  = 12.8
-
-export var MAX_SLOPE_ANGLE: float = 45.0
+@export var GRAVITY_ACCELERATION: float  = 12.8
 
 #------ VALUES
 var input_move: Vector3 = Vector3()
 var gravity_local: Vector3 = Vector3()
 var snap_vector: Vector3 = Vector3()
 
-export var is_running: bool = false
-export var is_crouching: bool = false
+@export var is_running: bool = false
+@export var is_crouching: bool = false
 
-export (int, 0, 200) var push = 1
+@export var push = 1
 #------ REFERENCES
-onready var player_model: MeshInstance = $"Collider/Player Model"
+@onready var player_model: MeshInstance3D = $"Collider/Player Model"
 
-onready var collider: CollisionShape = $"Collider"
-onready var crouch_collider: CollisionShape = $"crouch collide"
+@onready var collider: CollisionShape3D = $"Collider"
+@onready var crouch_collider: CollisionShape3D = $"crouch collide"
 
-onready var cieling_detector: RayCast = $"crouch collide/cieling detector"
+@onready var cieling_detector: RayCast3D = $"crouch collide/cieling detector"
 #--------------- FUNCTIONS ----------------
 #------ BUILT IN
 
 # gets called when the player is loaded
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) #make it so the curor turns invisible and gets captured in the window (press F8 to stop the game without the mouse)
-
-	player_model.visible = false #make the playermodel invisible when the game is actually playing as to not obstruct the players view
+	
+	
+	#player_model.visible = false #make the playermodel invisible when the game is actually playing as to not obstruct the players view
 
 
 # gets called every physics frame
@@ -65,7 +64,7 @@ func _physics_process(delta):
 	input_move = (
 		get_input_direction() * WALK_SPEED if not is_running and not is_crouching else get_input_direction() * RUN_SPEED if not is_crouching else get_input_direction() * CROUCH_SPEED
 	)
-
+	
 	#--- GRAVITY
 	# make gravity work if the player is not on the floor, else do nothing
 	if not is_on_floor():
@@ -85,22 +84,25 @@ func _physics_process(delta):
 	
 	#--- CROUCHING
 	cieling_detector.force_raycast_update()
-
+	
 	if Input.is_action_pressed("crouch"):
 		is_crouching = true
 	elif cieling_detector.is_colliding():
 		is_crouching = true
 	else:
 		is_crouching = false
-
+	
 	collider.disabled = is_crouching
 	crouch_collider.disabled = not is_crouching
 
 	#--- MOVE PLAYER
-	input_move = move_and_slide_with_snap(input_move + gravity_local, snap_vector, Vector3.UP, true, 4, deg2rad(MAX_SLOPE_ANGLE), false)
+	velocity = input_move + gravity_local
+	#floor_snap_length = snap_vector
+	
+	move_and_slide()
 
 	#--- shove objects around when you collide with them
-	for index in get_slide_count():
+	for index in get_slide_collision_count():
 		var collision = get_slide_collision(index)
 		if collision.collider.is_in_group("bodies"):
 			collision.collider.apply_central_impulse(-collision.normal * push)
@@ -117,4 +119,4 @@ func get_input_direction() -> Vector3:
 	)
 
 	# gather info and convert it from player space to world space and normalise it
-	return transform.basis.xform(Vector3(x, 0, z)).normalized()
+	return transform.basis * Vector3(x, 0, z).normalized()

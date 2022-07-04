@@ -1,81 +1,60 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://baxhb0y6pkyrq"]
 
-[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Maps/DEBUG/TEST_MAP_1.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/smoothing/smoothing.gd" type="Script" id=3]
-[ext_resource path="res://Scripts/camera.gd" type="Script" id=4]
-[ext_resource path="res://Assets/UI/hex.webp" type="Texture" id=5]
-[ext_resource path="res://Assets/UI/smallhex.webp" type="Texture" id=6]
+[ext_resource type="PackedScene" uid="uid://c5e0q4jdhbtyx" path="res://Player.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://cxbxd7djc2paw" path="res://Maps/DEBUG/TEST_MAP_1.tscn" id="2"]
+[ext_resource type="Script" path="res://Scripts/camera.gd" id="4"]
+[ext_resource type="Texture2D" uid="uid://cjdwnfmflj8el" path="res://Assets/UI/hex.webp" id="5"]
+[ext_resource type="Texture2D" uid="uid://xqhuouyqagts" path="res://Assets/UI/smallhex.webp" id="6"]
 
-[node name="Master" type="Spatial"]
+[node name="Master" type="Node3D"]
 
-[node name="Map" parent="." instance=ExtResource( 2 )]
+[node name="Map" parent="." instance=ExtResource( "2" )]
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+[node name="Player" parent="." instance=ExtResource( "1" )]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 4.31797, 0)
 
-[node name="Smoothing" type="Spatial" parent="."]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
-script = ExtResource( 3 )
-target = NodePath("../Player")
+[node name="look pivot" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+script = ExtResource( "4" )
 
-[node name="look pivot" type="Spatial" parent="Smoothing"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0 )
-script = ExtResource( 4 )
-
-[node name="Camera" type="Camera" parent="Smoothing/look pivot"]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.306777, 0 )
+[node name="Camera" type="Camera3D" parent="Player/look pivot"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.306777, 0)
 current = true
 
 [node name="control" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
-[node name="suit" type="TextureProgress" parent="control"]
+[node name="suit" type="TextureProgressBar" parent="control"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -50.0
-margin_top = -50.0
-margin_right = 50.0
-margin_bottom = 50.0
 max_value = 3.0
 value = 3.0
-texture_progress = ExtResource( 5 )
 fill_mode = 5
-tint_progress = Color( 0, 0.976471, 1, 0.27451 )
+texture_progress = ExtResource( "5" )
+tint_progress = Color(0, 0.976471, 1, 0.27451)
 radial_fill_degrees = 180.0
 
-[node name="health" type="TextureProgress" parent="control"]
+[node name="health" type="TextureProgressBar" parent="control"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -50.0
-margin_top = -50.0
-margin_right = 50.0
-margin_bottom = 50.0
 value = 100.0
-texture_progress = ExtResource( 6 )
 fill_mode = 5
-tint_progress = Color( 0, 1, 0, 0.27451 )
+texture_progress = ExtResource( "6" )
+tint_progress = Color(0, 1, 0, 0.27451)
 
-[node name="ammo" type="TextureProgress" parent="control"]
+[node name="ammo" type="TextureProgressBar" parent="control"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -50.0
-margin_top = -50.0
-margin_right = 50.0
-margin_bottom = 50.0
 max_value = 3.0
 value = 3.0
-texture_progress = ExtResource( 5 )
 fill_mode = 4
-tint_progress = Color( 0, 0, 1, 0.27451 )
+texture_progress = ExtResource( "5" )
+tint_progress = Color(0, 0, 1, 0.27451)
 radial_fill_degrees = 180.0

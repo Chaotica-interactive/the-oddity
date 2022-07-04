@@ -8,6 +8,16 @@
 
 config_version=5
 
+_global_script_classes=[{
+"base": "CharacterBody3D",
+"class": &"player",
+"language": &"GDScript",
+"path": "res://Scripts/Player.gd"
+}]
+_global_script_class_icons={
+"player": ""
+}
+
 [application]
 
 config/name="The Oddity"

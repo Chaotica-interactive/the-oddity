@@ -20,7 +20,7 @@
 
 extends Spatial
 
-export(NodePath) var target : NodePath setget set_target, get_target
+@export var target : node_path setget set_target, get_target
 
 var _m_Target : Spatial
 
